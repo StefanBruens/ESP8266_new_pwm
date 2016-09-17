@@ -28,12 +28,17 @@
 
 /* no user servicable parts beyond this point */
 
+#define PWM_MAX_TICKS 0x7fffff
 #if SDK_PWM_PERIOD_COMPAT_MODE
 #define PWM_PERIOD_TO_TICKS(x) (x * 0.2)
 #define PWM_DUTY_TO_TICKS(x) (x * 5)
+#define PWM_MAX_DUTY (PWM_MAX_TICKS * 0.2)
+#define PWM_MAX_PERIOD (PWM_MAX_TICKS * 5)
 #else
 #define PWM_PERIOD_TO_TICKS(x) (x)
 #define PWM_DUTY_TO_TICKS(x) (x)
+#define PWM_MAX_DUTY PWM_MAX_TICKS
+#define PWM_MAX_PERIOD PWM_MAX_TICKS
 #endif
 
 #include <c_types.h>
@@ -384,6 +389,10 @@ pwm_set_duty(uint32_t duty, uint8_t channel)
 {
 	if (channel > PWM_MAX_CHANNELS)
 		return;
+
+	if (duty > PWM_MAX_DUTY)
+		duty = PWM_MAX_DUTY;
+
 	pwm_duty[channel] = duty;
 }
 
@@ -399,11 +408,11 @@ void ICACHE_FLASH_ATTR
 pwm_set_period(uint32_t period)
 {
 	pwm_period = period;
+
+	if (pwm_period > PWM_MAX_PERIOD)
+		pwm_period = PWM_MAX_PERIOD;
+
 	pwm_period_ticks = PWM_PERIOD_TO_TICKS(period);
-
-	if (pwm_period_ticks > 0x7fffff)
-		pwm_period_ticks = 0x7fffff;
-
 }
 
 uint32_t ICACHE_FLASH_ATTR
