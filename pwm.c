@@ -210,7 +210,7 @@ _pwm_phases_prep(struct pwm_phase* pwm)
 		int32_t ticks = PWM_DUTY_TO_TICKS(pwm_duty[n]);
 		if (ticks == 0) {
 			pwm[0].off_mask |= gpio_mask[n];
-		} else if (ticks >= pwm_period) {
+		} else if (ticks >= pwm_period_ticks) {
 			pwm[0].on_mask |= gpio_mask[n];
 		} else {
 			if (ticks < (pwm_period_ticks/2)) {
