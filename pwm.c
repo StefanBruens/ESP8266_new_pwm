@@ -46,7 +46,7 @@
 #define TIMER1_ENABLE_TIMER             0x0080
 
 struct pwm_phase {
-	int32_t ticks;     ///< delay until next phase, in 200ns units
+	uint32_t ticks;    ///< delay until next phase, in 200ns units
 	uint16_t on_mask;  ///< GPIO mask to switch on
 	uint16_t off_mask; ///< GPIO mask to switch off
 };
@@ -207,7 +207,7 @@ _pwm_phases_prep(struct pwm_phase* pwm)
 	}
 	phases = 1;
 	for (n = 0; n < pwm_channels; n++) {
-		int32_t ticks = PWM_DUTY_TO_TICKS(pwm_duty[n]);
+		uint32_t ticks = PWM_DUTY_TO_TICKS(pwm_duty[n]);
 		if (ticks == 0) {
 			pwm[0].off_mask |= gpio_mask[n];
 		} else if (ticks >= pwm_period_ticks) {
