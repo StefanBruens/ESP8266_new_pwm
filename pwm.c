@@ -191,9 +191,8 @@ pwm_init(uint32_t period, uint32_t *duty, uint32_t pwm_channel_num,
 	ETS_FRC_TIMER1_INTR_ATTACH(pwm_intr_handler, NULL);
 	TM1_EDGE_INT_ENABLE();
 
-	RTC_CLR_REG_MASK(FRC1_INT_ADDRESS, FRC1_INT_CLR_MASK);
-	RTC_REG_WRITE(FRC1_CTRL_ADDRESS,
-		TIMER1_DIVIDE_BY_16 | TIMER1_ENABLE_TIMER);
+	timer->frc1_int &= ~FRC1_INT_CLR_MASK;
+	timer->frc1_ctrl = 0;
 
 	pwm_start();
 }
@@ -366,6 +365,7 @@ pwm_start(void)
 #if PWM_DEBUG
 			ets_printf("PWM stop\n");
 #endif
+			timer->frc1_ctrl = 0;
 			ETS_FRC1_INTR_DISABLE();
 		}
 		pwm_state.next_set = NULL;
@@ -385,6 +385,7 @@ pwm_start(void)
 		pwm_state.current_phase = phases - 1;
 		ETS_FRC1_INTR_ENABLE();
 		RTC_REG_WRITE(FRC1_LOAD_ADDRESS, 0);
+		timer->frc1_ctrl = TIMER1_DIVIDE_BY_16 | TIMER1_ENABLE_TIMER;
 		return;
 	}
 
