@@ -25,6 +25,7 @@
   #define PWM_MAX_CHANNELS 8
 #endif
 #define PWM_DEBUG 0
+#define PWM_USE_NMI 0
 
 /* no user servicable parts beyond this point */
 
@@ -188,7 +189,11 @@ pwm_init(uint32_t period, uint32_t *duty, uint32_t pwm_channel_num,
 
 	pwm_set_period(period);
 
+#if PWM_USE_NMI
+	ETS_FRC_TIMER1_NMI_INTR_ATTACH(pwm_intr_handler);
+#else
 	ETS_FRC_TIMER1_INTR_ATTACH(pwm_intr_handler, NULL);
+#endif
 	TM1_EDGE_INT_ENABLE();
 
 	timer->frc1_int &= ~FRC1_INT_CLR_MASK;
