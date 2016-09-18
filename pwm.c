@@ -361,9 +361,13 @@ pwm_start(void)
 	uint8_t phases = _pwm_phases_prep(*pwm);
 
         // all with 0% / 100% duty - stop timer
-	if ((*pwm)[phases].ticks == pwm_period_ticks) {
-		if (pwm_state.next_set)
+	if (phases == 1) {
+		if (pwm_state.next_set) {
+#if PWM_DEBUG
+			ets_printf("PWM stop\n");
+#endif
 			ETS_FRC1_INTR_DISABLE();
+		}
 		pwm_state.next_set = NULL;
 
 		GPIO_REG_WRITE(GPIO_OUT_W1TS_ADDRESS, (*pwm)[0].on_mask);
@@ -374,6 +378,9 @@ pwm_start(void)
 
 	// start if not running
 	if (!pwm_state.next_set) {
+#if PWM_DEBUG
+		ets_printf("PWM start\n");
+#endif
 		pwm_state.current_set = pwm_state.next_set = *pwm;
 		pwm_state.current_phase = phases - 1;
 		ETS_FRC1_INTR_ENABLE();
