@@ -93,7 +93,7 @@ struct gpio_regs {
 	uint32_t status_w1ts; /* 0x60000320 */
 	uint32_t status_w1tc; /* 0x60000324 */
 };
-static struct gpio_regs* gpio = (void*)(0x60000300);
+static struct gpio_regs* gpio = (struct gpio_regs*)(0x60000300);
 
 struct timer_regs {
 	uint32_t frc1_load;   /* 0x60000600 */
@@ -107,7 +107,7 @@ struct timer_regs {
 	uint32_t frc2_int;    /* 0x6000062C */
 	uint32_t frc2_alarm;  /* 0x60000630 */
 };
-static struct timer_regs* timer = (void*)(0x60000600);
+static struct timer_regs* timer = (struct timer_regs*)(0x60000600);
 
 static void ICACHE_RAM_ATTR
 pwm_intr_handler(void)
