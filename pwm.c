@@ -53,6 +53,11 @@
 #include <eagle_soc.h>
 #include <ets_sys.h>
 
+// ICACHE_RAM_ATTR is neither used nor defined in Non-OS SDK
+#ifndef ICACHE_RAM_ATTR
+  #define ICACHE_RAM_ATTR
+#endif
+
 // from SDK hw_timer.c
 #define TIMER1_DIVIDE_BY_16             0x0004
 #define TIMER1_ENABLE_TIMER             0x0080
