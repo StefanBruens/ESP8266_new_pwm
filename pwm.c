@@ -26,8 +26,12 @@
 #ifndef PWM_MAX_CHANNELS
   #define PWM_MAX_CHANNELS 8
 #endif
-#define PWM_DEBUG 0
-#define PWM_USE_NMI 0
+#ifndef PWM_DEBUG
+  #define PWM_DEBUG 0
+#endif
+#ifndef PWM_USE_NMI
+  #define PWM_USE_NMI 0
+#endif
 
 /* no user servicable parts beyond this point */
 
