@@ -18,6 +18,8 @@
 
 /* Set the following three defines to your needs */
 
+#include "user_config.h"
+
 #ifndef SDK_PWM_PERIOD_COMPAT_MODE
   #define SDK_PWM_PERIOD_COMPAT_MODE 0
 #endif
