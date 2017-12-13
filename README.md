@@ -30,7 +30,7 @@ above.
 Example usage:
 
 	#define PWM_CHANNELS 5
-	const uint32_t period = 5000 // * 200ns ^= 1 kHz
+	const uint32_t period = 5000; // * 200ns ^= 1 kHz
 
 	// PWM setup
 	uint32 io_info[PWM_CHANNELS][3] = {
