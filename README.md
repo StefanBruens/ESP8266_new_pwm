@@ -1,7 +1,8 @@
 # ESP8266_new_pwm
 This is a drop-in replacement for the ESP8266 SDK PWM
 
-If you like this project and want to support this and my other works, consider donating on [Liberapay][liberapay]
+If you like this project and want to support this and my other works, consider donating on Liberapay
+<img src="https://img.shields.io/liberapay/patrons/StefanB.svg?logo=liberapay">
 
 The software PWM provided in the ESP8266 SDK from Espressif has several drawbacks:
 
